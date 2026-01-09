@@ -123,7 +123,7 @@ jobs:
             echo "text<<'EOF'"
             printf '%s\n' "$AI"
             echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          ;} >> "$GITHUB_OUTPUT"
 
       - name: Post reply
         if: steps.gate.outputs.should == 'true'
