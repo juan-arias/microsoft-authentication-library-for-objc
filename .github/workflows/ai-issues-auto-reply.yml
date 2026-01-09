@@ -119,11 +119,10 @@ jobs:
           echo "Got response from server: $AI"
 
           # Set multi-line output for next step
-          {
-            echo "text<<'EOF'"
-            printf '%s\n' "$AI"
-            echo "EOF"
-          ;} >> "$GITHUB_OUTPUT"
+          echo "text<<EOF" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "$AI" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
 
       - name: Post reply
         if: steps.gate.outputs.should == 'true'
