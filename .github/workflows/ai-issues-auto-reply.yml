@@ -3,7 +3,7 @@ name: AI auto-reply to new issues
 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 permissions:
   issues: write
@@ -115,6 +115,8 @@ jobs:
 
           # Extract text
           AI=$(jq -r '.choices[0].message.content // ""' response.json)
+
+          echo "Got response from server: $AI"
 
           # Set multi-line output for next step
           {
