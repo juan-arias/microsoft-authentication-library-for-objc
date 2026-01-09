@@ -80,9 +80,9 @@ jobs:
           echo "::debug::Reading issue"
 
           ISSUE_URL="${{ github.event.issue.html_url }}"
-          ISSUE_TITLE="${{ github.event.issue.title }}"
+          ISSUE_TITLE=$(printf '%s' "${{ github.event.issue.title }}")
           echo "::debug::Getting issue's body"
-          ISSUE_BODY="${{ github.event.issue.body || '' }}"
+          ISSUE_BODY=$(printf '%s' "${{ github.event.issue.body || '' }}")
           REPO="${{ github.repository }}"
 
           # System & user prompts tuned for triage; keep it short and safe.
