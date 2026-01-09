@@ -82,7 +82,7 @@ jobs:
           ISSUE_URL="${{ github.event.issue.html_url }}"
           ISSUE_TITLE=$(printf '%s' "${{ github.event.issue.title }}")
           echo "::debug::Getting issue's body"
-          #ISSUE_BODY=$(printf '%s' "${{ github.event.issue.body || '' }}")
+          # ISSUE_BODY=$(printf '%s' "${{ github.event.issue.body || '' }}")
           ISSUE_BODY="When logging in from my app, the broker opens up and I authenticate my self in the MS Authenticator broker, select the account I wish to login with and I get sent correctly back to my app. But I'm not getting the token from the broker."
           REPO="${{ github.repository }}"
 
