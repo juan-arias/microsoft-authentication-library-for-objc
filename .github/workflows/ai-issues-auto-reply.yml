@@ -71,7 +71,7 @@ jobs:
         id: ai
         if: steps.gate.outputs.should == 'true'
         env:
-          GH_MODELS_TOKEN: ${{ secrets.GH_MODELS_TOKEN }}  
+          GH_MODELS_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
           GH_MODELS_MODEL: ${{ env.MODELS_MODEL }}
         run: |
           set -euo pipefail
