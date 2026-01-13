@@ -95,7 +95,7 @@ jobs:
           REQ=$(jq -n --arg m "$GH_MODELS_MODEL" \
                       --arg sys "$SYSTEM_PROMPT" \
                       --arg user "$USER_PROMPT" \
-                '{model:$m, messages:[{role:"system",content:$sys},{role:"user",content:$user}], temperature:0.4}')
+                '{model:$m, messages:[{role:"system",content:$sys},{role:"user",content:$user}]}')
 
           # Call GitHub Models Chat Completions API
           HTTP_CODE=$(curl -sSL -X POST -w "%{http_code}" -o response.json \
