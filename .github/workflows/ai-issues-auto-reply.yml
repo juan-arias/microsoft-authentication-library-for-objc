@@ -76,15 +76,11 @@ jobs:
           GH_MODELS_MODEL: ${{ env.MODELS_MODEL }}
         run: |
           set -euo pipefail
-          set -x   # prints each command before executing it
-
-          echo "::debug::Reading issue"
+          set -x   # use for debugging, it prints each command before executing it
 
           ISSUE_URL="${{ github.event.issue.html_url }}"
-          ISSUE_TITLE=$(printf '%s' "${{ github.event.issue.title }}")
-          echo "::debug::Getting issue's body"
-          
-          ISSUE_BODY="When logging in from my app, the broker opens up and I authenticate my self in the MS Authenticator broker, select the account I wish to login with and I get sent correctly back to my app. But I'm not getting the token from the broker."
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          ISSUE_BODY="${{ github.event.issue.body || '' }}"
           REPO="${{ github.repository }}"
 
           # System & user prompts tuned for triage; keep it short and safe.
