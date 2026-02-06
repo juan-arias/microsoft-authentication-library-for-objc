@@ -74,16 +74,19 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: |
+          npm init -y
+          npm install @github/copilot-sdk typescript ts-node @types/node
+
       - name: Run Copilot SDK
         if: steps.gate.outputs.should == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm install @github/copilot-sdk
-          node --input-type=module << 'EOF'
+          cat << 'EOF' > script.ts
           import { CopilotClient } from "@github/copilot-sdk";
 
-          // Token is read from environment variable automatically
           const client = new CopilotClient();
           const session = await client.createSession({ model: "gpt-4.1" });
 
@@ -92,6 +95,8 @@ jobs:
 
           await client.stop();
           EOF
+          
+          npx ts-node --esm script.ts
 
       - name: Generate AI reply (GitHub Models)
         id: ai
