@@ -93,10 +93,9 @@ jobs:
 
           await client.stop();
           EOF
-                
-          npx --yes tsx -e "console.log('preparing…')" >/dev/null
+                      
           npx --yes npm@latest i @github/copilot-sdk >/dev/null
-          npx --yes tsx script.ts
+          npx --yes ts-node --esm script.ts
 
       - name: Generate AI reply (GitHub Models)
         id: ai
