@@ -100,7 +100,7 @@ jobs:
           await client.stop();
           EOF
           
-          npx ts-node --esm script.ts
+          npx ts-node script.ts
 
       - name: Generate AI reply (GitHub Models)
         id: ai
