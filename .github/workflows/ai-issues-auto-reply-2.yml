@@ -95,7 +95,7 @@ jobs:
           EOF
                       
           npx --yes npm@latest i @github/copilot-sdk >/dev/null
-          npx --yes ts-node --esm script.ts
+          npx --yes tsx script.ts
 
       - name: Generate AI reply (GitHub Models)
         id: ai
