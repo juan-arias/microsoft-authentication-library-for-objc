@@ -71,33 +71,49 @@ jobs:
 
             core.setOutput('should','true');
 
-      - name: Setup Node.js
+      
+      - name: Set up Python
         if: steps.gate.outputs.should == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-python@v5
         with:
-          node-version: '20.x'
+          python-version: '3.12'
 
-      - name: Run Copilot SDK
+      - name: Run inline Python
         if: steps.gate.outputs.should == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cat << 'EOF' > script.ts
-          import { CopilotClient } from "@github/copilot-sdk";
+          pip install github-copilot-sdk
+          python - << 'PY'
+          import os, json, asyncio
+          from copilot import CopilotClient
+          # GitHub provides event payload in GITHUB_EVENT_PATH
+          with open(os.environ['GITHUB_EVENT_PATH'], 'r', encoding='utf-8') as f:
+              event = json.load(f)
 
-          (async () => {
-            const client = new CopilotClient();
-            const session = await client.createSession({ model: "gpt-4.1" });
+          issue = event["issue"]
+          action = event["action"]
+          title = issue["title"]
+          number = issue["number"]
+          body = issue.get("body") or ""
 
-            const response = await session.sendAndWait({ prompt: "What is 2 + 2?" });
-            console.log(response?.data.content);
+          print(f"[info] Issue #{number} {action}: {title!r}")
+          print(f"[info] Body length: {len(body)}")
+          
+          async def main():
+              client = CopilotClient()
+              await client.start()
 
-            await client.stop();
-          })();
-          EOF
-                      
-          npx --yes npm@latest i @github/copilot-sdk >/dev/null
-          npx --yes tsx script.ts
+              session = await client.create_session({"model": "gpt-4.1"})
+              response = await session.send_and_wait({"prompt": "What is 2 + 2?"})
+
+              print(response.data.content)
+
+              await client.stop()
+
+          asyncio.run(main())
+
+          PY
 
       - name: Generate AI reply (GitHub Models)
         id: ai
