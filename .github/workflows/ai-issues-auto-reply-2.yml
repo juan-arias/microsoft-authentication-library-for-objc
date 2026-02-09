@@ -1,5 +1,5 @@
 
-name: AI auto-reply to new issues
+name: AI auto-reply to new issues v2
 
 on:
   issues:
