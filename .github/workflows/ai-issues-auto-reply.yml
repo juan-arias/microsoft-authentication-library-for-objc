@@ -39,11 +39,13 @@ jobs:
             // PR safety: only issues
             if (issue.pull_request) { core.setOutput('should','false'); return; }
 
+            /*
             // Skip issues from maintainers (owners/members/collaborators)
             const assoc = issue.author_association || 'NONE';
             if (['OWNER','MEMBER','COLLABORATOR'].includes(assoc)) {
               core.setOutput('should', 'false'); return;
             }
+            */
 
             // Label checks
             const labels = (issue.labels || []).map(l => (typeof l === 'string' ? l : l.name).toLowerCase());
