@@ -55,12 +55,13 @@ jobs:
             if (labels.some(l => block.includes(l))) {
               core.setOutput('should','false'); return;
             }
-
+            /*
             // Skip if maintainer already commented or we already AI-replied
             const comments = await github.rest.issues.listComments({ owner, repo, issue_number: issue.number, per_page: 50 });
             if (comments.data.find(c => ['OWNER','MEMBER','COLLABORATOR'].includes(c.author_association))) {
               core.setOutput('should','false'); return;
             }
+            */
             const priorAI = comments.data.find(c =>
               (c.user?.login === 'github-actions[bot]' || c.user?.type === 'Bot') &&
               (c.body || '').includes('<!-- AI-autoreply -->')
